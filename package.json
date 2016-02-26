@@ -1,0 +1,20 @@
+{
+  "name": "swift-ref",
+  "main": "./lib/swift-ref",
+  "version": "0.0.0",
+  "description": "A short description of your package",
+  "keywords": [
+  ],
+  "activationCommands": {
+    "atom-workspace": "swift-ref:toggle"
+  },
+  "repository": "https://github.com/atom/swift-ref",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+    "jquery": ">2.1.0",
+    "filter-editor-view": "latest"
+  }
+}
