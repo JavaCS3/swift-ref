@@ -8,10 +8,8 @@ class SwiftRefView
   constructor: (serializedState) ->
     # Create root element
     @_createFrameArea()
-    filterEditor = new FilterEditorView()
-    @body.appendChild(filterEditor.getElement())
-    filterEditor.onFilterSync (str) ->
-      Math.random() for i in [0..Math.floor(Math.random()*5)]
+    @filterEditor = new FilterEditorView()
+    @body.appendChild(@filterEditor.getElement())
     @_createContentArea()
 
     @title.textContent = 'Swift Ref' if not serializedState?.title?
@@ -50,6 +48,12 @@ class SwiftRefView
 
   setContent: (str) ->
     @content.textContent = str
+
+  onConfirmed: (callback) ->
+    @filterEditor.onConfirmed callback
+
+  onFilter: (callback) ->
+    @filterEditor.onFilter callback
 
   # Returns an object that can be retrieved when package is activated
   serialize: ->

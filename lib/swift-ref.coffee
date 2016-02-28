@@ -1,9 +1,20 @@
 'use strict'
 
 SwiftRefView = require './swift-ref-view'
+DemoFilter = require '../plugins/demo/demo'
+
 {CompositeDisposable} = require 'atom'
 
 module.exports = SwiftRef =
+  # Config
+  config:
+    someSetting:
+      type: 'array'
+      default: ['1', '2', '3']
+      items:
+        type: 'string'
+
+  # Object member variables
   subscriptions: null
   handleSelectionTimeout: null
 
@@ -12,6 +23,9 @@ module.exports = SwiftRef =
     # Views
     @swiftRefView = new SwiftRefView
     @swiftRefPanel = atom.workspace.addRightPanel(item: @swiftRefView.getElement())
+
+    @swiftRefView.onFilter DemoFilter.onFilter
+    @swiftRefView.onConfirmed DemoFilter.onConfirmed
 
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     @subscriptions = new CompositeDisposable
@@ -27,7 +41,7 @@ module.exports = SwiftRef =
 
   serialize: ->
 
-  onSelectionChanged: (evt) ->
+  onSelectionChanged: (event) ->
     clearTimeout(@handleSelectionTimeout)
     @handleSelectionTimeout = null
 
