@@ -28,9 +28,8 @@ module.exports = SwiftRef =
     @swiftRefView.onFilter DemoFilter.onFilter
     @swiftRefView.onConfirmed (text) =>
       @confirmToken = Math.random().toString(36).substring(7)
-      DemoFilter.onConfirmed @confirmToken, text, (token, result) =>
-        if token is @confirmToken
-          @swiftRefView.setContent(result)
+      process.nextTick =>
+        DemoFilter.onConfirmed @confirmToken, text, (token, result) => @_confirmedCallback(token, result)
 
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     @subscriptions = new CompositeDisposable
@@ -39,7 +38,7 @@ module.exports = SwiftRef =
     @subscriptions.add atom.workspace.observeTextEditors (editor) =>
       editor.onDidChangeSelectionRange (event) => @onSelectionChanged (event)
 
-  _confirmedResponse: (token, result) =>
+  _confirmedCallback: (token, result) ->
     if token is @confirmToken
       @swiftRefView.setContent(result)
 
