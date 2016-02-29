@@ -17,6 +17,7 @@ module.exports = SwiftRef =
   # Object member variables
   subscriptions: null
   handleSelectionTimeout: null
+  confirmToken: ""
 
   activate: (state) ->
     console.log 'activated'
@@ -25,7 +26,11 @@ module.exports = SwiftRef =
     @swiftRefPanel = atom.workspace.addRightPanel(item: @swiftRefView.getElement())
 
     @swiftRefView.onFilter DemoFilter.onFilter
-    @swiftRefView.onConfirmed DemoFilter.onConfirmed
+    @swiftRefView.onConfirmed (text) =>
+      @confirmToken = Math.random().toString(36).substring(7)
+      DemoFilter.onConfirmed @confirmToken, text, (token, result) =>
+        if token is @confirmToken
+          @swiftRefView.setContent(result)
 
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     @subscriptions = new CompositeDisposable
@@ -33,6 +38,10 @@ module.exports = SwiftRef =
     # Register command that toggles this view
     @subscriptions.add atom.workspace.observeTextEditors (editor) =>
       editor.onDidChangeSelectionRange (event) => @onSelectionChanged (event)
+
+  _confirmedResponse: (token, result) =>
+    if token is @confirmToken
+      @swiftRefView.setContent(result)
 
   deactivate: ->
     @swiftRefView?.destroy()
