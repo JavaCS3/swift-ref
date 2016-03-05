@@ -18,27 +18,26 @@ class SwiftRefView
 
   _createFrameArea: ->
     @root = document.createElement('div')
-    @root.classList.add('swift-ref')
-
-    container = document.createElement('div')
-    container.classList.add('inset-panel')
+    @root.classList.add('swift-ref', 'flex-container', 'inset-panel')
 
     @heading = document.createElement('div')
     @heading.classList.add('panel-heading')
-    container.appendChild(@heading)
+    @root.appendChild(@heading)
 
     @body = document.createElement('div')
-    @body.classList.add('panel-body', 'padded')
-    container.appendChild(@body)
-
-    @root.appendChild(container)
+    @body.classList.add('panel-body', 'padded', 'flex-container')
+    @root.appendChild(@body)
 
   _createContentArea: ->
     @title = document.createElement('div')
     @heading.appendChild(@title)
 
-    @content = document.createElement('div')
-    @body.appendChild(@content)
+    @contentContainer = document.createElement('div')
+    @contentContainer.classList.add('content-container')
+    @body.appendChild(@contentContainer)
+
+    @content = document.createElement('pre')
+    @contentContainer.appendChild(@content)
 
   setWidth: (width) ->
     @root.style.width = "#{width}em"
