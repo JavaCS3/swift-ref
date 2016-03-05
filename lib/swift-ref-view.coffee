@@ -21,11 +21,11 @@ class SwiftRefView
     @root.classList.add('swift-ref', 'flex-container', 'inset-panel')
 
     @heading = document.createElement('div')
-    @heading.classList.add('panel-heading')
+    @heading.classList.add('panel-heading', 'flex-header')
     @root.appendChild(@heading)
 
     @body = document.createElement('div')
-    @body.classList.add('panel-body', 'padded', 'flex-container')
+    @body.classList.add('panel-body', 'padded', 'flex-body', 'flex-container')
     @root.appendChild(@body)
 
   _createContentArea: ->

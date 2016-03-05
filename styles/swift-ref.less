@@ -7,15 +7,21 @@
 .swift-ref {
   height: 100%;
 
-  .flex-container {
-    flex: 1;
+  .select-list {
+    .flex-header;
   }
 
   pre {
-    padding: 0;
     word-wrap: normal;
-    overflow: visible;
   }
+}
+
+.flex-header {
+  flex-shrink: 0;
+}
+
+.flex-body {
+  flex: 1;
 }
 
 .flex-container {
